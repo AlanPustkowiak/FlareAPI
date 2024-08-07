@@ -15,6 +15,8 @@ public class Employee implements Serializable {
     private String phone;
     private String jobTitle;
 
+    public Employee() {}
+
     public Employee(String name, String email, String phone, String jobTitle) {
         this.name = name;
         this.email = email;
