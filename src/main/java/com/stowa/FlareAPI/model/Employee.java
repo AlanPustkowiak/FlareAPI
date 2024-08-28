@@ -2,6 +2,7 @@ package com.stowa.FlareAPI.model;
 
 import jakarta.persistence.*;
 
+import javax.xml.crypto.Data;
 import java.io.Serializable;
 
 @Entity
@@ -14,6 +15,12 @@ public class Employee implements Serializable {
     private String email;
     private String phone;
     private String jobTitle;
+    private String department;
+    private String team;
+    private Data dateOfBirth;
+    private String pesel;
+    private String localization;
+    private String City;
 
     public Employee() {}
 
