@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import javax.xml.crypto.Data;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class Employee implements Serializable {
@@ -15,20 +16,20 @@ public class Employee implements Serializable {
     private String email;
     private String phone;
     private String jobTitle;
-    private String department;
-    private String team;
-    private Data dateOfBirth;
-    private String pesel;
-    private String localization;
-    private String City;
+    private Date dateOfBirth;
+    private Integer departamentId;
+    private String WorkLocation;
 
     public Employee() {}
 
-    public Employee(String name, String email, String phone, String jobTitle) {
+    public Employee(String name, String email, String phone, String jobTitle,Date dateOfBirth, Integer departamentId, String WorkLocation) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.jobTitle = jobTitle;
+        this.dateOfBirth = dateOfBirth;
+        this.departamentId = departamentId;
+        this.WorkLocation = WorkLocation;
     }
 
     public Long getId() {
@@ -80,5 +81,29 @@ public class Employee implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", jobTitle='" + jobTitle + '\'' +
                 '}';
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Integer getDepartamentId() {
+        return departamentId;
+    }
+
+    public void setDepartamentId(Integer departamentId) {
+        this.departamentId = departamentId;
+    }
+
+    public String getWorkLocation() {
+        return WorkLocation;
+    }
+
+    public void setWorkLocation(String workLocation) {
+        WorkLocation = workLocation;
     }
 }
