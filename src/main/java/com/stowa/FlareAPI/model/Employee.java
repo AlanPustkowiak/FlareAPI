@@ -72,17 +72,6 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", jobTitle='" + jobTitle + '\'' +
-                '}';
-    }
-
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -105,5 +94,16 @@ public class Employee implements Serializable {
 
     public void setWorkLocation(String workLocation) {
         WorkLocation = workLocation;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                '}';
     }
 }
