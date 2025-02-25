@@ -1,109 +1,56 @@
 package com.stowa.FlareAPI.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table
+@Table(name = "employees")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
+
+    @NotBlank(message = "Imię i nazwisko są wymagane")
     private String name;
+
+    @Email(message = "Niepoprawny email")
+    @NotBlank(message = "Email jest wymagany")
+    @Column(unique = true)
     private String email;
+
     private String phone;
+
+    @NotBlank(message = "Stanowisko jest wymagane")
     private String jobTitle;
-    private Date dateOfBirth;
+
+    @Past(message = "Data urodzenia musi być w przeszłości")
+    private LocalDate dateOfBirth;
+
+    @NotNull(message = "ID departamentu jest wymagane")
     private Integer departamentId;
+
     private String WorkLocation;
 
-    public Employee() {}
+    private LocalDate hireDate;
 
-    public Employee(String name, String email, String phone, String jobTitle,Date dateOfBirth, Integer departamentId, String WorkLocation) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.jobTitle = jobTitle;
-        this.dateOfBirth = dateOfBirth;
-        this.departamentId = departamentId;
-        this.WorkLocation = WorkLocation;
-    }
+    @Enumerated(EnumType.STRING)
+    private EmployeeStatus status = EmployeeStatus.ACTIVE;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Integer getDepartamentId() {
-        return departamentId;
-    }
-
-    public void setDepartamentId(Integer departamentId) {
-        this.departamentId = departamentId;
-    }
-
-    public String getWorkLocation() {
-        return WorkLocation;
-    }
-
-    public void setWorkLocation(String workLocation) {
-        WorkLocation = workLocation;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", jobTitle='" + jobTitle + '\'' +
-                '}';
+    public enum EmployeeStatus{
+        ACTIVE, ON_LEAVE, TERMINATED
     }
 }
