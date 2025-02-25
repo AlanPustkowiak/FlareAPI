@@ -1,7 +1,7 @@
-package com.stowa.FlareAPI;
+package com.stowa.FlareAPI.controller;
 
 import com.stowa.FlareAPI.Service.EmployeeService;
-import com.stowa.FlareAPI.model.Employee;
+import com.stowa.FlareAPI.model.entity.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

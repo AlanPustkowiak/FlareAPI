@@ -1,12 +1,12 @@
-package com.stowa.FlareAPI.model;
+package com.stowa.FlareAPI.model.entity;
 
 import jakarta.persistence.*;
 
-import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@Table
 public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
