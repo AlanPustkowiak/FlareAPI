@@ -1,5 +1,6 @@
 package com.stowa.FlareAPI.model.dto;
 
+import com.stowa.FlareAPI.model.entity.Department;
 import com.stowa.FlareAPI.model.entity.Employee;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -33,8 +34,8 @@ public class EmployeeDTO {
     @Past(message = "Data urodzenia musi być w przeszłości")
     private LocalDate dateOfBirth;
 
-    @NotNull(message = "Id departamentu jest wymagane")
-    private Integer departmentId;
+    @NotNull(message = "Departament jest wymagane")
+    private Department department;
 
     private String workLocation;
 
@@ -49,7 +50,7 @@ public class EmployeeDTO {
         this.phone = employee.getPhone();
         this.jobTitle = employee.getJobTitle();
         this.dateOfBirth = employee.getDateOfBirth();
-        this.departmentId = employee.getDepartamentId();
+        this.department = employee.getDepartment();
         this.workLocation = employee.getWorkLocation();
         this.hireDate = employee.getHireDate();
         this.status = employee.getStatus();
@@ -63,6 +64,7 @@ public class EmployeeDTO {
         emp.setPhone(this.phone);
         emp.setJobTitle(this.jobTitle);
         emp.setDateOfBirth(this.dateOfBirth);
+        emp.setDepartment(this.department);
         emp.setWorkLocation(this.workLocation);
         emp.setHireDate(this.hireDate);
         emp.setStatus(this.status);

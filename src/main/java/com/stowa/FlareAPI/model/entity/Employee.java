@@ -40,8 +40,9 @@ public class Employee implements Serializable {
     @Past(message = "Data urodzenia musi być w przeszłości")
     private LocalDate dateOfBirth;
 
-    @NotNull(message = "ID departamentu jest wymagane")
-    private Integer departamentId;
+    @ManyToOne
+    @JoinColumn(name = "dopertment_id", nullable = false)
+    private Department department;
 
     private String WorkLocation;
 
