@@ -1,13 +1,16 @@
-package com.stowa.FlareAPI.Service;
+package com.stowa.FlareAPI.service;
 
 import com.stowa.FlareAPI.exception.EmployeeNotFoundException;
+import com.stowa.FlareAPI.model.dto.EmployeeDTO;
 import com.stowa.FlareAPI.model.entity.Department;
 import com.stowa.FlareAPI.model.entity.Employee;
+import com.stowa.FlareAPI.repository.DepartmentRepository;
 import com.stowa.FlareAPI.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -17,30 +20,38 @@ public class EmployeeService {
     @Autowired
     public EmployeeService(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository) {
         this.employeeRepository = employeeRepository;
-        this.departmentRepository = departmentRepository
+        this.departmentRepository = departmentRepository;
     }
 
-    public Employee addEmployee(Employee employee) {
+    public EmployeeDTO addEmployee(EmployeeDTO employeeDTO) {
+        Employee employee = employeeDTO.toEntity();
         Department department = departmentRepository.findById(employee.getDepartment().getId())
                 .orElseThrow(() -> new RuntimeException("Nie znaleziono takiego departamentu"));
         employee.setDepartment(department);
-        return employeeRepository.save(employee);
+        Employee savedEmployee = employeeRepository.save(employee);
+        return new EmployeeDTO(savedEmployee);
     }
 
-    public List<Employee> findAllEmployees() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> findAllEmployees() {
+        return employeeRepository.findAll()
+                .stream()
+                .map(EmployeeDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public Employee updateEmployee(Employee employee) {
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
+        Employee employee = employeeDTO.toEntity();
         Department department = departmentRepository.findById(employee.getDepartment().getId())
                 .orElseThrow(() -> new RuntimeException("Nie znaleziono takiego departamentu"));
         employee.setDepartment(department);
-        return employeeRepository.save(employee);
+        Employee updatedEmployee = employeeRepository.save(employee);
+        return new EmployeeDTO(updatedEmployee);
     }
 
-    public Employee findEmployeeById(Long id){
-        return employeeRepository.findEmployeeById(id)
+    public EmployeeDTO findEmployeeById(Long id){
+        Employee employee =  employeeRepository.findEmployeeById(id)
                 .orElseThrow((() -> new EmployeeNotFoundException("User by id " + id + " was not found")));
+        return new EmployeeDTO(employee);
     }
 
     public void deleteEmployee(Long id) {

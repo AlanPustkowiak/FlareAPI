@@ -1,6 +1,6 @@
 package com.stowa.FlareAPI.controller;
 
-import com.stowa.FlareAPI.Service.EmployeeService;
+import com.stowa.FlareAPI.service.EmployeeService;
 import com.stowa.FlareAPI.model.dto.ApiResponse;
 import com.stowa.FlareAPI.model.dto.EmployeeDTO;
 import com.stowa.FlareAPI.model.entity.Employee;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.util.List;
 
