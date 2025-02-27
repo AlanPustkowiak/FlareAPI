@@ -9,7 +9,9 @@ import com.stowa.FlareAPI.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,5 +58,51 @@ public class EmployeeService {
 
     public void deleteEmployee(Long id) {
         employeeRepository.deleteEmployeeById(id);
+    }
+
+    public List<EmployeeDTO> findEmployeesByDepartment(Integer departmentId){
+        Department department = departmentRepository.findById(departmentId).orElseThrow(() -> new RuntimeException("Nie znaleziono takiego departamentu"));
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> employee.getDepartment().getId().equals(departmentId))
+                .map(EmployeeDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<EmployeeDTO> findEmployeesByStatus(Employee.EmployeeStatus status){
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> employee.getStatus() == status)
+                .map(EmployeeDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<EmployeeDTO> findEmployeesHiredBetween(LocalDate startDate, LocalDate endDate){
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee -> {
+                    LocalDate hireDate = employee.getHireDate();
+                    return hireDate != null && (hireDate.isEqual(startDate) || hireDate.isAfter(startDate)
+                    && hireDate.isEqual(endDate) || hireDate.isBefore(endDate));
+                })
+                .map(EmployeeDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<EmployeeDTO> searchEmployees(String query){
+        if (query == null || query.trim().isEmpty()){
+            return findAllEmployees();
+        }
+
+        String searchQuery = query.toLowerCase();
+        return employeeRepository.findAll()
+                .stream()
+                .filter(employee ->
+                                (employee.getName() != null && employee.getName().toLowerCase().contains(searchQuery)) ||
+                                        (employee.getEmail() != null && employee.getEmail().toLowerCase().contains(searchQuery)) ||
+                                        (employee.getJobTitle() != null && employee.getJobTitle().toLowerCase().contains(searchQuery))
+                        )
+                .map(EmployeeDTO::new)
+                .collect(Collectors.toList());
     }
 }

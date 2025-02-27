@@ -55,7 +55,7 @@ public class EmployeeController {
 
     @GetMapping("/department/{departmentId}")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByDepartment(@PathVariable Integer departmentId){
-        List<EmployeeDTO> employees = employeeService.findemployeesByDepartment(departmentId);
+        List<EmployeeDTO> employees = employeeService.findEmployeesByDepartment(departmentId);
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
