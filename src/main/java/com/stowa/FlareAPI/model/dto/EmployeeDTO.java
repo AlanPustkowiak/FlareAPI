@@ -35,7 +35,7 @@ public class EmployeeDTO {
     private LocalDate dateOfBirth;
 
     @NotNull(message = "Departament jest wymagane")
-    private Department department;
+    private DepartmentDTO department;
 
     private String workLocation;
 
@@ -50,7 +50,9 @@ public class EmployeeDTO {
         this.phone = employee.getPhone();
         this.jobTitle = employee.getJobTitle();
         this.dateOfBirth = employee.getDateOfBirth();
-        this.department = employee.getDepartment();
+        if (employee.getDepartment() != null) {
+            this.department = new DepartmentDTO(employee.getDepartment());
+        }
         this.workLocation = employee.getWorkLocation();
         this.hireDate = employee.getHireDate();
         this.status = employee.getStatus();
@@ -64,7 +66,11 @@ public class EmployeeDTO {
         emp.setPhone(this.phone);
         emp.setJobTitle(this.jobTitle);
         emp.setDateOfBirth(this.dateOfBirth);
-        emp.setDepartment(this.department);
+        if (this.department != null) {
+            Department department = new Department();
+            department.setId(this.department.getId());
+            emp.setDepartment(department);
+        }
         emp.setWorkLocation(this.workLocation);
         emp.setHireDate(this.hireDate);
         emp.setStatus(this.status);
