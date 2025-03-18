@@ -25,8 +25,8 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<Department>> getDepartmentById(@PathVariable("id") Integer id){
-        List<Department> department = departmentRepository.findById(id);
+    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Integer id){
+        Department department = departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException("Nie znaleziono departamentu!"));
         return new ResponseEntity<>(department, HttpStatus.OK);
     }
 
