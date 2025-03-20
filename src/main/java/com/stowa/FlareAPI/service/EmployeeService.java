@@ -1,5 +1,6 @@
 package com.stowa.FlareAPI.service;
 
+import com.stowa.FlareAPI.exception.DepartmentNotFoundException;
 import com.stowa.FlareAPI.exception.EmployeeNotFoundException;
 import com.stowa.FlareAPI.model.dto.EmployeeDTO;
 import com.stowa.FlareAPI.model.entity.Department;
@@ -27,9 +28,11 @@ public class EmployeeService {
 
     public EmployeeDTO addEmployee(EmployeeDTO employeeDTO) {
         Employee employee = employeeDTO.toEntity();
-        Department department = departmentRepository.findById(employee.getDepartment().getId())
-                .orElseThrow(() -> new RuntimeException("Nie znaleziono takiego departamentu"));
-        employee.setDepartment(department);
+        if (employee.getDepartment() != null && employee.getDepartment().getId() != null) {
+            Department department = departmentRepository.findById(employee.getDepartment().getId())
+                    .orElseThrow(() -> new DepartmentNotFoundException("Nie znaleziono departamentu"));
+            employee.setDepartment(department);
+        }
         Employee savedEmployee = employeeRepository.save(employee);
         return new EmployeeDTO(savedEmployee);
     }
@@ -42,10 +45,13 @@ public class EmployeeService {
     }
 
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
+        findEmployeeById(employeeDTO.getId());
         Employee employee = employeeDTO.toEntity();
-        Department department = departmentRepository.findById(employee.getDepartment().getId())
-                .orElseThrow(() -> new RuntimeException("Nie znaleziono takiego departamentu"));
-        employee.setDepartment(department);
+        if (employee.getDepartment() != null && employee.getDepartment().getId() != null) {
+            Department department = departmentRepository.findById(employee.getDepartment().getId())
+                    .orElseThrow(() -> new DepartmentNotFoundException("Nie znaleziono departamentu o id " + employee.getDepartment().getId()));
+            employee.setDepartment(department);
+        }
         Employee updatedEmployee = employeeRepository.save(employee);
         return new EmployeeDTO(updatedEmployee);
     }
@@ -57,6 +63,7 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id) {
+        findEmployeeById(id);
         employeeRepository.deleteEmployeeById(id);
     }
 

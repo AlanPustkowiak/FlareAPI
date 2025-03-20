@@ -2,9 +2,11 @@ package com.stowa.FlareAPI.controller;
 
 import com.stowa.FlareAPI.exception.DepartmentNotFoundException;
 import com.stowa.FlareAPI.model.dto.ApiResponse;
+import com.stowa.FlareAPI.model.dto.DepartmentDTO;
 import com.stowa.FlareAPI.model.entity.Department;
 import com.stowa.FlareAPI.repository.DepartmentRepository;
 import com.stowa.FlareAPI.service.DepartmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,32 +22,32 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping
-    public ResponseEntity<List<Department>> getAllDepartments(){
-        List<Department> departments = departmentService.getAllDepartments();
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartments(){
+        List<DepartmentDTO> departments = departmentService.getAllDepartments();
         return new ResponseEntity<>(departments, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Department> getDepartmentById(@PathVariable("id") Integer id){
-        Department department = departmentService.getDepartmentById(id);
+    public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable("id") Integer id){
+        DepartmentDTO department = departmentService.getDepartmentById(id);
         return new ResponseEntity<>(department, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Department> addDepartment(@RequestBody Department department){
-        Department newDepartment = departmentService.addDepartment(department);
+    public ResponseEntity<DepartmentDTO> addDepartment(@Valid @RequestBody DepartmentDTO department){
+        DepartmentDTO newDepartment = departmentService.addDepartment(department);
         return new ResponseEntity<>(newDepartment, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(
+    public ResponseEntity<DepartmentDTO> updateDepartment(
             @PathVariable("id") Integer id,
-            @RequestBody Department department){
+            @RequestBody DepartmentDTO department){
 
         departmentService.getDepartmentById(id);
 
         department.setId(id);
-        Department updatedDepartment = departmentService.addDepartment(department);
+        DepartmentDTO updatedDepartment = departmentService.addDepartment(department);
         return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
     }
 

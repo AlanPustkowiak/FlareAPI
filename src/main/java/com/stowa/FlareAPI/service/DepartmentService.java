@@ -1,34 +1,44 @@
 package com.stowa.FlareAPI.service;
 
 import com.stowa.FlareAPI.exception.DepartmentNotFoundException;
+import com.stowa.FlareAPI.model.dto.DepartmentDTO;
 import com.stowa.FlareAPI.model.entity.Department;
 import com.stowa.FlareAPI.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class DepartmentService{
     private final DepartmentRepository departmentRepository;
 
-    public List<Department> getAllDepartments(){
-        return departmentRepository.findAll();
+    public List<DepartmentDTO> getAllDepartments(){
+        return departmentRepository.findAll()
+                .stream()
+                .map(DepartmentDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public Department getDepartmentById(Integer id){
-        return departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException("Nie znaleziono departamentu!"));
+    public DepartmentDTO getDepartmentById(Integer id){
+        Department department = departmentRepository.findById(id)
+                .orElseThrow(() -> new DepartmentNotFoundException("Nie znaleziono departamentu!"));
+        return new DepartmentDTO(department);
     }
 
-    public Department addDepartment(Department department){
-        return departmentRepository.save(department);
+    public DepartmentDTO addDepartment(DepartmentDTO departmentDTO){
+        Department department = departmentDTO.toEntity();
+        Department savedDepartment = departmentRepository.save(department);
+        return new DepartmentDTO(department);
     }
 
-    public Department updateDepartment(Integer id, Department department){
-        getDepartmentById(id);
-        department.setId(id);
-        return departmentRepository.save(department);
+    public DepartmentDTO updateDepartment(DepartmentDTO departmentDTO){
+        getDepartmentById(departmentDTO.getId());
+        Department department = departmentDTO.toEntity();
+        Department updatedDepartment = departmentRepository.save(department);
+        return new DepartmentDTO(department);
     }
 
     public void deleteDepartment(Integer id){
