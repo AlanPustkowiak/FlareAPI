@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/employees")
 @CrossOrigin("*")
 @RequiredArgsConstructor
+@SuppressWarnings("unused")
 public class EmployeeController {
     private final EmployeeService employeeService;
 

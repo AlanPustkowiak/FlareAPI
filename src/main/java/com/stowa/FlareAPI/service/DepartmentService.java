@@ -30,14 +30,14 @@ public class DepartmentService{
 
     public DepartmentDTO addDepartment(DepartmentDTO departmentDTO){
         Department department = departmentDTO.toEntity();
-        Department savedDepartment = departmentRepository.save(department);
+        departmentRepository.save(department);
         return new DepartmentDTO(department);
     }
 
     public DepartmentDTO updateDepartment(DepartmentDTO departmentDTO){
         getDepartmentById(departmentDTO.getId());
         Department department = departmentDTO.toEntity();
-        Department updatedDepartment = departmentRepository.save(department);
+        departmentRepository.save(department);
         return new DepartmentDTO(department);
     }
 

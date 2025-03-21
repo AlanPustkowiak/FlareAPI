@@ -1,10 +1,7 @@
 package com.stowa.FlareAPI.controller;
 
-import com.stowa.FlareAPI.exception.DepartmentNotFoundException;
 import com.stowa.FlareAPI.model.dto.ApiResponse;
 import com.stowa.FlareAPI.model.dto.DepartmentDTO;
-import com.stowa.FlareAPI.model.entity.Department;
-import com.stowa.FlareAPI.repository.DepartmentRepository;
 import com.stowa.FlareAPI.service.DepartmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/departments")
 @CrossOrigin("*")
 @RequiredArgsConstructor
+//@SuppressWarnings("unused")
 public class DepartmentController {
     private final DepartmentService departmentService;
 

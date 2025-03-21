@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Locked;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;

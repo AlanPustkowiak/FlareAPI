@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,7 +67,7 @@ public class EmployeeService {
     }
 
     public List<EmployeeDTO> findEmployeesByDepartment(Integer departmentId){
-        Department department = departmentRepository.findById(departmentId).orElseThrow(() -> new RuntimeException("Nie znaleziono takiego departamentu"));
+        departmentRepository.findById(departmentId).orElseThrow(() -> new RuntimeException("Nie znaleziono takiego departamentu"));
         return employeeRepository.findAll()
                 .stream()
                 .filter(employee -> employee.getDepartment().getId().equals(departmentId))
