@@ -9,6 +9,7 @@ import com.stowa.FlareAPI.repository.DepartmentRepository;
 import com.stowa.FlareAPI.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -61,6 +62,7 @@ public class EmployeeService {
         return new EmployeeDTO(employee);
     }
 
+    @Transactional
     public void deleteEmployee(Long id) {
         findEmployeeById(id);
         employeeRepository.deleteEmployeeById(id);
