@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/departments")
 @CrossOrigin("*")
 @RequiredArgsConstructor
-//@SuppressWarnings("unused")
+@SuppressWarnings("unused")
 public class DepartmentController {
     private final DepartmentService departmentService;
 
