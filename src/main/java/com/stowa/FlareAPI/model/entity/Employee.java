@@ -39,7 +39,7 @@ public class Employee implements Serializable {
     private LocalDate dateOfBirth;
 
     @ManyToOne
-    @JoinColumn(name = "dopertment_id", nullable = false)
+    @JoinColumn(name = "depertment_id", nullable = false)
     private Department department;
 
     private String WorkLocation;
